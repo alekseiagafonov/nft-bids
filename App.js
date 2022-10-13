@@ -18,8 +18,8 @@ export default function App() {
   return (
     <NavigationContainer theme={theme}>
       <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-        initialRouteName="Home"
+        screenOptions={{ headerShown: true }}
+        initialRouteName="Details"
       >
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Details" component={Details} />
