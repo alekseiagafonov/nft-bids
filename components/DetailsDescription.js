@@ -64,3 +64,5 @@ const DetailsDescription = ({ data }) => {
     </>
   );
 };
+
+export default DetailsDescription;
