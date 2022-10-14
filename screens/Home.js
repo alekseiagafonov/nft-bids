@@ -1,27 +1,28 @@
 import React, { useState } from "react";
-
 import { View, SafeAreaView, FlatList } from "react-native";
-import { NFTData, HomeHeader, FocusedStatusBar } from "../components";
+
+import { NFTCard, HomeHeader, FocusedStatusBar } from "../components";
 import { COLORS, NFTData } from "../constants";
 
 const Home = () => {
   const [nftData, setNftData] = useState(NFTData);
 
-  const handleSearch = () => {
+  const handleSearch = (value) => {
     if (value.length === 0) {
       setNftData(NFTData);
     }
+
+    const filteredData = NFTData.filter((item) =>
+      item.name.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (filteredData.length === 0) {
+      setNftData(NFTData);
+    } else {
+      setNftData(filteredData);
+    }
   };
 
-  const filteredData = NFTData.filter((item) =>
-    item.name.toLowerCase().includes(value.toLowerCase())
-  );
-
-  if (filteredData.length === 0) {
-    setNftData(NFTData);
-  } else {
-    setNftData(filteredData);
-  }
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar backgroundColor={COLORS.primary} />
@@ -29,7 +30,7 @@ const Home = () => {
         <View style={{ zIndex: 0 }}>
           <FlatList
             data={nftData}
-            renderItem={({ item }) => <NFTData data={item} />}
+            renderItem={({ item }) => <NFTCard data={item} />}
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={<HomeHeader onSearch={handleSearch} />}
@@ -46,18 +47,8 @@ const Home = () => {
             zIndex: -1,
           }}
         >
-          <View
-            style={{
-              height: 300,
-              backgroundColor: COLORS.primary,
-            }}
-          />
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: COLORS.white,
-            }}
-          />
+          <View style={{ height: 300, backgroundColor: COLORS.primary }} />
+          <View style={{ flex: 1, backgroundColor: COLORS.white }} />
         </View>
       </View>
     </SafeAreaView>
